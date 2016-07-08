@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+* {
+	padding:0;
+	margin:0;
+font-family:'Open Sans',sans-serif;
+box-sizing:border-box;	
+}
+body {
+	background:#f4f4f4;
+}
+h1 {
+	margin:0 auto;
+	}
+header {
+	width:100%;
+	text-align:center;
+	padding:10px;
+	
+	}
+header a {
+	position:relative;
+	top:-10px;
+	left:-10px;
+	box-sizing:border-box;
+	float:left;
+   text-decoration: none;
+   font-size:25px;
+   color: black;
+   line-height:20px;
+   padding: 15px;
+   margin:0;
+   border: 0px solid black;
+   text-align: center;
+   background-color: #f4f4f4;
+   -webkit-transition: background-color 1s, color 1s; /* Safari */
+    transition: background-color 1s, color 1s;
+    }
+header a:hover {
+    color: white;
+    background-color: #d4d4d4;
+    }	
+	
+	
+button {
+	background:#f4f4f4;
+	border:none;
+	padding:20px;
+	font-size:15px;
+	font-weight:bold;
+	cursor:pointer;
+	color:black;
+	webkit-transition: background-color 1s, color 1s; /* Safari */
+    transition: background-color 1s, color 1s;
+}
+button:hover {
+	background: #d4d4d4;
+	color:white;
+}
+button:focus {
+	outline-style:none;
+	border:none;
+}
+#bodee {
+width:100%;
+}
+#timer{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+#timer li {
+    float: left;
+	line-height:80px;
+	font-size:30px;
+	padding-right:20px;
+	text-align:center;
+	padding-left:20px;
+}
+#timer li:focus {
+outline:none;
+background:#e4e4e4;
+}
+#time{
+    list-style-type: none;
+    margin: 0 auto;
+    padding: 0;
+    overflow: hidden;
+}
+
+#time li {
+    float: left;
+	font-size:80px;
+}
+#tims {
+width:100%;
+}
+#tims2 {
+width:400px;
+margin:0 auto;}
+#timer2 {
+width:700px;
+margin:0 auto;}
+#sop {
+width:150px;
+margin:0 auto;}
+#seconds{
+margin-right:50px;}
+</style>
+<script>
+var audio = new Audio("lol.mp3");
+var myVar;
+function countDown() {
+	var y =document.getElementsByTagName("button");
+	y[0].disabled=true;
+	y[1].disabled=false;
+    var seconds = document.getElementById("seconds").innerHTML;
+    var minutes = document.getElementById("minutes").innerHTML;
+    var hours = document.getElementById("hours").innerHTML;
+    var t = parseInt(seconds)*1000 + parseInt(minutes)*1000*60 + parseInt(hours)*1000*60*60;
+    var u = Date.parse(new Date());
+    var v = parseInt(t)+parseInt(u);
+    var ends = new Date(parseInt(v));
+	myVar = setInterval(function() {
+	if(Date.parse(ends)>Date.parse(new Date())) {
+		var timeDifference = Date.parse(ends)-Date.parse(new Date());
+		convertTime(parseInt(timeDifference));
+	} else if (Date.parse(ends)==(Date.parse(new Date()))){
+	document.getElementById("hoursTimer").innerHTML="00";
+	document.getElementById("minutesTimer").innerHTML="00";
+	document.getElementById("secondsTimer").innerHTML="00";
+	audio.play();
+	clearInterval(myVar);
+	y[0].disabled=false;
+	y[1].disabled=false;
+	}
+	},100);
+	
+}
+function pause() {
+var y =document.getElementsByTagName("button");
+	y[1].disabled=true;
+	y[0].disabled=false;
+	document.getElementById("seconds").innerHTML=document.getElementById("secondsTimer").innerHTML;
+   document.getElementById("minutes").innerHTML=document.getElementById("minutesTimer").innerHTML;
+   document.getElementById("hours").innerHTML=document.getElementById("hoursTimer").innerHTML;
+   clearInterval(myVar);
+	
+}
+
+
+function convertTime(miliseconds) {
+  var totalSeconds = Math.floor(miliseconds/1000);
+  var minutes = Math.floor((totalSeconds/60)%60);
+  var seconds = totalSeconds%60;
+  var hours = Math.floor(totalSeconds/3600);
+  
+   if(hours<10) {
+  document.getElementById("hoursTimer").innerHTML="0" +hours;
+  }
+  else {
+  document.getElementById("hoursTimer").innerHTML=hours;
+  }
+  if(minutes<10) {
+  document.getElementById("minutesTimer").innerHTML="0" +minutes;
+  }
+  else {
+  document.getElementById("minutesTimer").innerHTML=minutes;
+  }
+   if(seconds<10) {
+  document.getElementById("secondsTimer").innerHTML="0" +seconds;
+  }
+  else {
+  document.getElementById("secondsTimer").innerHTML=seconds;
+  }
+}
+function stopMusic() {
+audio.pause();
+}
+</script>
+</head>
+<body>
+<header>
+<a href="hpwslideshow.html">HOME</a>
+<h1>CountDown Timer</h1>
+
+<p>Type in your count down and start!</p>
+</header>
+
+<div id="bodee">
+
+	<div id="timer2">
+		<ul id="timer">
+		<li id="hours" contenteditable="true">00</li>
+		<li>:</li>
+		<li id="minutes" contenteditable="true">00</li>
+		<li>:</li>
+		<li id="seconds" contenteditable="true">03</li>
+		<li><button type="button" id="start" onclick="countDown()" >START</button></li>
+		<li><button type="button" id="pauseplay" onclick="pause()">PAUSE</button></li>
+		</ul>
+	</div>
+	
+	<div id="tims">
+	<div id="tims2">
+	<ul id="time">
+	<li id="hoursTimer">00</li>
+	<li>:</li>
+	<li id="minutesTimer">00</li>
+	<li>:</li>
+	<li id="secondsTimer">00</li>
+	</ul>
+	</div>
+	</div>
+	
+	<div id="sop">
+	<button type="button" id="stopmusic" onclick="stopMusic()">STOP ALARM</button>
+	</div>
+	
+</div>
+</body>
+</html>
